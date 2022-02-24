@@ -33,7 +33,6 @@ class HomeTableViewController: UITableViewController {
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         let myParams = ["count": numberOfTweet]
         
-        
         TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success: { (tweets: [NSDictionary]) in
             
             
@@ -41,21 +40,17 @@ class HomeTableViewController: UITableViewController {
             for tweet in tweets{
                 self.tweetArray.append(tweet)
                 
+                
             }
         
             self.tableView.reloadData()
             self.myRefreshControl.endRefreshing()
         
         
-        }, failure: { Error in
+        }, failure: { (Error) in
             print("Could not receive tweets! oh no!!")
         })
     }
-    
-    
-    
-    
-    
     
     
     func loadMoreTweets(){
@@ -70,7 +65,6 @@ class HomeTableViewController: UITableViewController {
             self.tweetArray.removeAll()
             for tweet in tweets{
                 self.tweetArray.append(tweet)
-                
             }
         
             self.tableView.reloadData()
@@ -81,17 +75,11 @@ class HomeTableViewController: UITableViewController {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-   
-    
-
-    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == tweetArray.count{
+            loadMoreTweets()
+        }
+    }
     
     
     
